@@ -1,0 +1,15 @@
+python remove_anything_video.py \
+  --input_video /coc/flash7/yliu3735/workspace/inpaint/result_video.mp4 \
+  --coords_type key_in \
+  --point_coords 534 808 \
+  --point_labels 2 \
+  --dilate_kernel_size 5 \
+  --output_dir ./results \
+  --sam_model_type "vit_h" \
+  --sam_ckpt ./pretrained_models/sam_vit_h_4b8939.pth \
+  --lama_config lama/configs/prediction/default.yaml \
+  --lama_ckpt ./pretrained_models/big-lama \
+  --tracker_ckpt vitb_384_mae_ce_32x4_ep300 \
+  --vi_ckpt ./pretrained_models/sttn.pth \
+  --mask_idx 2 \
+  --fps 25 \
