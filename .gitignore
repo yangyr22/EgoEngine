@@ -2,3 +2,7 @@ inpaint/pretrained_models
 inpaint/temp_data
 inpaint/depth_anything2/checkpoints
 inpaint/weights
+DexMimic/
+WebVisualizer/
+co-tracker/
+dexmv-learn/
