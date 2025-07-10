@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<robot name="umi_gripper">
+  <link name="umi_hand">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/visual/hand.glb"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="1.570795 0 0" xyz="0 0 0.02617"/>
+      <geometry>
+        <box size="0.036 0.08 0.2"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.0003"/>
+      <geometry>
+        <cylinder radius="0.03" length="0.0077"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.01 0 0.03"/>
+      <mass value="0.73"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.0025" iyz="0" izz="0.0017"/>
+    </inertial>
+  </link>
+  <link name="umi_hand_tcp"/>
+  <joint name="umi_hand_tcp_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.1034"/>
+    <parent link="umi_hand"/>
+    <child link="umi_hand_tcp"/>
+  </joint>
+  <link name="umi_leftfinger">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/visual/finger.glb" scale="1 1 2.546"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 18.5e-3 27.93e-3"/>
+      <geometry>
+        <box size="22e-3 15e-3 50.92e-3"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 6.8e-3 5.59e-3"/>
+      <geometry>
+        <box size="22e-3 8.8e-3 9.67e-3"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0.5235987755982988 0 0" xyz="0 15.9e-3 71.45e-3"/>
+      <geometry>
+        <box size="17.5e-3 7e-3 59.83e-3"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 7.58e-3 114.03e-3"/>
+      <geometry>
+        <box size="17.5e-3 15.2e-3 47.05e-3"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 69e-3"/>
+      <mass value="0.015"/>
+      <inertia ixx="1.2e-05" ixy="0" ixz="0" iyy="1.2e-05" iyz="0" izz="3.8e-06"/>
+    </inertial>
+  </link>
+
+  <link name="umi_rightfinger">
+    <visual>
+      <origin rpy="0 0 3.141592653589793" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/visual/finger.glb" scale="1 1 2.546"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 -18.5e-3 27.93e-3"/>
+      <geometry>
+        <box size="22e-3 15e-3 50.92e-3"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 -6.8e-3 5.59e-3"/>
+      <geometry>
+        <box size="22e-3 8.8e-3 9.67e-3"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="-0.5235987755982988 0 0" xyz="0 -15.9e-3 71.45e-3"/>
+      <geometry>
+        <box size="17.5e-3 7e-3 59.83e-3"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 -7.58e-3 114.03e-3"/>
+      <geometry>
+        <box size="17.5e-3 15.2e-3 47.05e-3"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 69e-3"/>
+      <mass value="0.015"/>
+      <inertia ixx="1.2e-05" ixy="0" ixz="0" iyy="1.2e-05" iyz="0" izz="3.8e-06"/>
+    </inertial>
+  </link>
+  <joint name="umi_finger_joint1" type="prismatic">
+    <parent link="umi_hand"/>
+    <child link="umi_leftfinger"/>
+    <origin rpy="0 0 0" xyz="0 0 0.0584"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" lower="0.0" upper="0.04" velocity="0.2"/>
+    <dynamics damping="0.3"/>
+  </joint>
+  <joint name="umi_finger_joint2" type="prismatic">
+    <parent link="umi_hand"/>
+    <child link="umi_rightfinger"/>
+    <origin rpy="0 0 0" xyz="0 0 0.0584"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="100" lower="0.0" upper="0.04" velocity="0.2"/>
+    <mimic joint="umi_finger_joint1" multiplier="1" offset="0"/>
+    <dynamics damping="0.3"/>
+  </joint>
+</robot>
