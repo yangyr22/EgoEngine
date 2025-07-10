@@ -1,0 +1,23 @@
+# keep in alphabetical order
+dm_control
+h5py
+Pillow
+pygame
+pyspacemouse
+PyQt6
+pyquaternion
+pyrealsense2
+pure-python-adb
+quaternion
+tyro
+ur-rtde
+zmq
+xarm
+xarm-python-sdk
+numpy-quaternion
+termcolor
+imageio-ffmpeg
+opencv-python
+# for zed camera
+pyzed
+cudatoolkit-dev # to install local nvcc needed by ZED SDK

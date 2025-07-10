@@ -1,0 +1,10 @@
+REDIS_HOST = "172.16.0.2"
+REDIS_PORT = 6379
+CAMERA_ID = "shoulderview_right"
+CAMERA_TYPE = "Zed"
+TAG_SIZE = 0.055
+# SN = 20036094 # shoulderview left
+SN = 21497414 # shoulderview right
+# TAG_SIZE = 5
+TAG_FAMILY = "tag36h11"
+IM_SIZE = (720, 1280)
