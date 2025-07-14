@@ -3,7 +3,7 @@
   run `dex_retargeting/utils/online_retargeting.py`
   ## Vrs data preperation(hand estimation)
   1. run command `aria_mps single -i path/to/vrs` 
-  2. run `inpaint/hand_tracking_prep.py` (under env sam2)
+  2. run `inpaint/hand_tracking_prep.py`, use `--all pose` to get landamrks and normals, and don't use to get uvs.(under env sam2)
   ## Inpaint
   run `inpaint/script/remove_anything_video1.sh` (under sam2)
   ## Object estimation
