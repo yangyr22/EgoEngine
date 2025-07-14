@@ -11,6 +11,5 @@
   2. get segment: run `inpaint/sam2_segment.py` (under `sam2`)
   3. reconstruct data with `FoundationPose/video_to_frames.py` and download mesh
   4. run `FoundationPose/run_demo.py` (under `foundationpose`)
-
   ## Git
   maybe need to `source ~/.bashrc` to connect.
