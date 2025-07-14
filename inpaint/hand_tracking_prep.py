@@ -23,8 +23,8 @@ def parse_arguments():
                        help='Output path')
     
     # Video parameters
-    parser.add_argument('--width', type=int, default=None,
-                       help='Output video width (default: use original)')
+    parser.add_argument('--width', type=int, default=640,
+                       help='Output video width (default: 640)')
     
     parser.add_argument('--all_pose', action='store_true',
                        help='Process all landmark')
@@ -115,11 +115,13 @@ def main():
             cropped_video = args.output_path + "cropped_video.mp4"
             all_pose_file = args.output_path + "all_pose.json"
             calib_file = args.output_path + "calib.json"
+            uv_file = args.output_path + "uv.json"
             trajectory = mps.read_closed_loop_trajectory(trajectory_path)
             fourcc = cv2.VideoWriter_fourcc(*'mp4v')
             fps = 30
             video_writer1 = cv2.VideoWriter(cropped_video, fourcc, fps, (width, width))
             pose_data = {"frames": []}
+            uv_data = {"frames": []}
             calib_data = {
                 "dst_calib_rgb": str(dst_calib_rgb),
                 "frames": []
@@ -185,6 +187,12 @@ def main():
                     }
                     T_world_camera = T_world_device @ T_device_camera
                     frame_calib = {"frame_idx" : frame_idx, "T_world_camera" : T_world_camera.to_matrix().tolist()}
+                    frame_uv = {"frame_idx" : frame_idx,
+                                "right_u" : width - right_uvs[5][1] if right_uvs[5] is not None else 'nan',
+                                "right_v" : right_uvs[5][0] if right_uvs[5] is not None else 'nan',
+                                "left_u" : width - left_uvs[5][1] if left_uvs[5] is not None else 'nan',
+                                "left_v" : left_uvs[5][0] if left_uvs[5] is not None else 'nan'}
+                    uv_data["frames"].append(frame_uv)
                     pose_data["frames"].append(frame_pose)
                     calib_data["frames"].append(frame_calib)
                 with open(all_pose_file, 'w') as f:

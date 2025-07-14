@@ -411,38 +411,38 @@ if __name__ == "__main__":
     video_w_box_p = output_dir / f"w_box_{dilate_kernel_size}.mp4"
     frame_mask_dir.mkdir(exist_ok=True, parents=True)
 
-    #load uv files
-    frame_coords_left, frame_coords_right = [], []
-    with open(args.uv, "r") as f:
-        for line in f:
-            uL, vL, uR, vR = [
-                float(x) if x.lower() != "nan" else np.nan
-                for x in line.strip().split(",")
-            ]
-            frame_coords_left.append(
-                [] if np.isnan(uL) or np.isnan(vL) else [[uL, vL]]
-            )
-            frame_coords_right.append(
-                [] if np.isnan(uR) or np.isnan(vR) else [[uR, vR]]
-            )
-
+    # #load uv files
+    # frame_coords_left, frame_coords_right = [], []
     # with open(args.uv, "r") as f:
-    #     data = json.load(f)
+    #     for line in f:
+    #         uL, vL, uR, vR = [
+    #             float(x) if x.lower() != "nan" else np.nan
+    #             for x in line.strip().split(",")
+    #         ]
+    #         frame_coords_left.append(
+    #             [] if np.isnan(uL) or np.isnan(vL) else [[uL, vL]]
+    #         )
+    #         frame_coords_right.append(
+    #             [] if np.isnan(uR) or np.isnan(vR) else [[uR, vR]]
+    #         )
 
-    # max_idx = max(frame["frame_idx"] for frame in data["frames"])
-    # T = max_idx + 1
+    with open(args.uv, "r") as f:
+        data = json.load(f)
 
-    # frame_coords_left  = [[] for _ in range(T)]
-    # frame_coords_right = [[] for _ in range(T)]
+    max_idx = max(frame["frame_idx"] for frame in data["frames"])
+    T = max_idx + 1
 
-    # for frame in data["frames"]:
-    #     i = frame["frame_idx"]
-    #     uL, vL = frame["left_u"],  frame["left_v"]
-    #     uR, vR = frame["right_u"], frame["right_v"]
-    #     if uL is not None and vL is not None:
-    #         frame_coords_left[i]  = [[uL, vL]]
-    #     if uR is not None and vR is not None:
-    #         frame_coords_right[i] = [[uR, vR]]
+    frame_coords_left  = [[] for _ in range(T)]
+    frame_coords_right = [[] for _ in range(T)]
+
+    for frame in data["frames"]:
+        i = frame["frame_idx"]
+        uL, vL = frame["left_u"],  frame["left_v"]
+        uR, vR = frame["right_u"], frame["right_v"]
+        if uL is not None and vL is not None:
+            frame_coords_left[i]  = [[uL, vL]]
+        if uR is not None and vR is not None:
+            frame_coords_right[i] = [[uR, vR]]
     
     
     if Path(video_raw_p).exists():

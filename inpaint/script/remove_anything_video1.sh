@@ -1,5 +1,5 @@
 python remove_anything_video_new.py \
-  --input_video /coc/flash7/yliu3735/workspace/inpaint/cropped_video.mp4 \
+  --input_video /coc/flash7/yliu3735/workspace/inpaint/temp_data/result_Trial/cropped_video.mp4 \
   --coords_type key_in \
   --point_coords 530 1037 \
   --point_labels 1 \
@@ -13,7 +13,7 @@ python remove_anything_video_new.py \
   --vi_ckpt ./pretrained_models/sttn.pth \
   --mask_idx 2 \
   --fps 25 \
-  --uv /coc/flash7/yliu3735/workspace/inpaint/uv.txt \
+  --uv /coc/flash7/yliu3735/workspace/inpaint/temp_data/result_Trial/uv.json \
   # --segment-only
 
 

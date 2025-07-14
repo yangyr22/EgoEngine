@@ -46,9 +46,9 @@ def parse_args():
                    help="Path to the input video file.")
     p.add_argument("--output_dir", "-o", required=True,
                    help="Directory where annotated frames and video will be saved.")
-    p.add_argument("--fx",  type=float, required=True,
+    p.add_argument("--fx",  type=float, default=277.0,
                    help="Camera focal length x.")
-    p.add_argument("--cx",  type=float, required=True,
+    p.add_argument("--cx",  type=float, default=319.5,
                    help="Camera principal point x.")
     p.add_argument("--tag_size", type=float, default=0.06,
                    help="AprilTag size in meters.")
@@ -222,7 +222,6 @@ def main():
         T = np.array(entry["T_world_camera"])
         T_new = delta @ T
         entry["T_world_camera_rebased"] = T_new.tolist()
-        entry["T_PnP"] = all_cam_poses[entry["frame_idx"]-first_frame].tolist()
 
     with open(out_path, "w") as f:
         json.dump(data, f, indent=2)
