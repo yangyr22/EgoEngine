@@ -77,31 +77,6 @@ if __name__=='__main__':
         'frame_idx': i,
         'ob_in_cam': pose.tolist(),
       })
-      # decompose current and previous
-      pose = pose.reshape(4,4)
-      R_cur = pose[:3,:3]
-      R_prv = prev_pose[:3,:3]
-      # relative rotation
-      R_delta = R_cur @ R_prv.T
-      # axis-angle
-      angle = np.arccos(np.clip((np.trace(R_delta)-1)/2, -1,1))
-      if angle > max_angle:
-        # extract axis
-        rx = R_delta[2,1] - R_delta[1,2]
-        ry = R_delta[0,2] - R_delta[2,0]
-        rz = R_delta[1,0] - R_delta[0,1]
-        axis = np.array([rx,ry,rz])
-        axis = axis/np.linalg.norm(axis)
-        # build clamped delta
-        Kx = np.array([[    0, -axis[2],  axis[1]],
-                       [ axis[2],     0, -axis[0]],
-                       [-axis[1], axis[0],     0]])
-        R_delta_clamped = np.eye(3) + np.sin(max_angle)*Kx + (1-np.cos(max_angle))*(Kx@Kx)
-        R_cur = R_delta_clamped @ R_prv
-      # rebuild pose
-      pose[:3,:3] = R_cur
-      # remember
-      prev_pose = pose.copy()
 
     os.makedirs(f'{debug_dir}/ob_in_cam', exist_ok=True)
     np.savetxt(f'{debug_dir}/ob_in_cam/{reader.id_strs[i]}.txt', pose.reshape(4,4))

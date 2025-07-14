@@ -141,6 +141,14 @@ def main():
                     right_landmarks_camera = (T_device_camera.inverse() @ right_landmarks.T).T
                     left_landmarks = np.array(hand_tracking_result.left_hand.landmark_positions_device)
                     left_landmarks_camera = (T_device_camera.inverse() @ left_landmarks.T).T
+                    
+                    right_uvs = []
+                    left_uvs = []
+                    for i in range(21):
+                        uv_right = dst_calib_rgb.project(right_landmarks_camera[i])
+                        uv_left = dst_calib_rgb.project(left_landmarks_camera[i])
+                        right_uvs.append([width - uv_right[1], uv_right[0]])
+                        left_uvs.append([width - uv_left[1], uv_left[0]])
 
                     if hand_tracking_result.left_hand.wrist_and_palm_normal_device:
                         left_wrist_normal_device = hand_tracking_result.left_hand.wrist_and_palm_normal_device.wrist_normal_device
@@ -160,6 +168,8 @@ def main():
                         "right_camera": right_landmarks_camera.tolist(),
                         "left_device": left_landmarks.tolist(),
                         "left_camera": left_landmarks_camera.tolist(),
+                        "right_uv": np.array(right_uvs).tolist(),
+                        "left_uv": np.array(left_uvs).tolist(),
                         "normal_device": {
                             "right_wrist": right_wrist_normal_device.tolist(),
                             "right_palm": right_palm_normal_device.tolist(),
@@ -209,7 +219,7 @@ def main():
                     video_writer1.write(rectified_image)
                     
                     marked_frame = cv2.rotate(rectified_image, cv2.ROTATE_90_COUNTERCLOCKWISE)
-                    right_landmark = hand_tracking_results[frame_idx - 1].right_hand.landmark_positions_device[0]  # First landmark of right hand
+                    right_landmark = hand_tracking_results[frame_idx - 1].right_hand.landmark_positions_device[5]  # First landmark of right hand
                     uv_right = dst_calib_rgb.project(T_device_camera.inverse() @ right_landmark)
 
                     left_landmark = hand_tracking_results[frame_idx - 1].left_hand.landmark_positions_device[5]  # First landmark of right hand
