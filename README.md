@@ -13,3 +13,6 @@
   4. run `FoundationPose/run_demo.py` (under foundationpose)
   ### TODO ###
   make this into a whole file.
+
+  ## Git
+  maybe need to `source ~/.bashrc` to connect.
